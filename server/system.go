@@ -1,6 +1,12 @@
 package main
 
-import "sync"
+import (
+	"log"
+	"os"
+	"sync"
+
+	"../common"
+)
 
 // ----------------------------------------------------------------------------
 // System : This class provides methods to init, start and stop the entire system and its modules
@@ -9,7 +15,7 @@ type System struct {
 
 	protocol           string
 	address            string
-	port               uint16
+	port               string
 	dbConnectionString string
 }
 
@@ -17,9 +23,7 @@ type System struct {
 func (this *System) Init() {
 
 	// read config
-	if err := this.ReadConfig(); err != nil {
-		panic(err)
-	}
+	this.ReadConfig()
 
 	// allocate objects
 	if err := this.allocateObjects(); err != nil {
@@ -41,24 +45,40 @@ func (this *System) Stop() {
 }
 
 // ----------------------------------------------------------------------------
-func (this *System) ReadConfig() error {
+func (this *System) ReadConfig() {
 
-	// TODO: Read these values from env or a file
-	//
+	this.protocol = os.Getenv(common.Protocol)
+	if this.protocol == "" {
+		log.Fatalln("Protocol param is missing. Check the env file.")
+		panic("not found")
+	}
 
-	// set default values as of now
-	this.protocol = "tcp"
-	this.address = "localhost"
-	this.port = 9876
+	this.address = os.Getenv(common.Address)
+	if this.address == "" {
+		log.Fatalln("Address param is missing. Check the env file.")
+		panic("not found")
+	}
 
-	this.dbConnectionString = "TODO"
+	// conversion isn't needed
+	this.port = os.Getenv(common.Port)
 
-	return nil
+	if this.port == "" {
+		log.Fatalln("Port param is missing. Check the env file.")
+		panic("not found")
+	}
+
+	this.dbConnectionString = os.Getenv(common.DBConnectionString)
+	if this.dbConnectionString == "" {
+		log.Fatalln("DbConnectionString param is missing. Check the env file.")
+		panic("not found")
+	}
+
+	log.Printf("Protocol: %s, Address: %s, Port: %s", this.protocol, this.address, this.port)
 }
 
 // ----------------------------------------------------------------------------
 func (this *System) GetDBConnectionString() string {
-	return ""
+	return this.dbConnectionString
 }
 
 // ----------------------------------------------------------------------------
@@ -66,7 +86,8 @@ func (this *System) allocateObjects() error {
 
 	this.rpcServer = &RpcServer{}
 	// Beware, conversion might panic
-	this.rpcServer.Init(this.protocol, this.address+":"+string(this.port))
+	address := this.address + ":" + this.port
+	this.rpcServer.Init(this.protocol, address)
 	return nil
 }
 
