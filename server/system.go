@@ -21,7 +21,7 @@ type System struct {
 
 // ----------------------------------------------------------------------------
 func (this *System) Init() {
-
+	log.Println("Initialising system ...")
 	// read config
 	this.ReadConfig()
 
@@ -29,23 +29,30 @@ func (this *System) Init() {
 	if err := this.allocateObjects(); err != nil {
 		panic(err)
 	}
+	log.Println("System initialized successfully.")
 
 }
 
 // ----------------------------------------------------------------------------
 func (this *System) Start() {
+	log.Println("Starting system ...")
 
+	log.Println("System started successfully")
 }
 
 // ----------------------------------------------------------------------------
 func (this *System) Stop() {
+	log.Println("Stopping system ...")
 	// close all connections
 	// shutdown rpc server
-
+	this.rpcServer.Stop()
+	log.Println("System stopped successfully")
 }
 
 // ----------------------------------------------------------------------------
 func (this *System) ReadConfig() {
+
+	log.Println("Reading config from .env file ...")
 
 	this.protocol = os.Getenv(common.Protocol)
 	if this.protocol == "" {
@@ -74,6 +81,8 @@ func (this *System) ReadConfig() {
 	}
 
 	log.Printf("Protocol: %s, Address: %s, Port: %s", this.protocol, this.address, this.port)
+
+	log.Println("Config reading has been completed.")
 }
 
 // ----------------------------------------------------------------------------
@@ -83,6 +92,8 @@ func (this *System) GetDBConnectionString() string {
 
 // ----------------------------------------------------------------------------
 func (this *System) allocateObjects() error {
+
+	log.Println("Allocating system objects ...")
 
 	this.rpcServer = &RpcServer{}
 	// Beware, conversion might panic

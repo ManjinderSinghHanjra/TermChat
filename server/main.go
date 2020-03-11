@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -9,8 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Welcome to TestApp")
-	fmt.Println("Initiating the server")
+	log.Println("Welcome to TermChat Server")
 
 	// TODO: Add implementation
 	err := godotenv.Load()

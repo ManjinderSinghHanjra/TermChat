@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"log"
 
 	TermChatProtos "../../common/generatedCode"
 )
@@ -13,6 +14,7 @@ type UserInteraction struct {
 
 // GetFriends : Comment
 func (this *UserInteraction) GetFriends(context.Context, *TermChatProtos.GetFriendsRequest) (*TermChatProtos.GetFriendsResponse, error) {
+	log.Println("Request received for Get Friends")
 	// validate user token
 	// get friends
 	// prepare response
