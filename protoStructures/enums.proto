@@ -1,0 +1,36 @@
+syntax = "proto3";
+option go_package = "TestApp";
+
+
+enum FriendshipStatus {
+    FriendshipStatus_Invalid = 0;
+    FriendshipStatus_Pending = 1;
+    FriendshipStatus_Approved = 2;
+    FriendshipStatus_Rejected = 3;
+}
+
+enum AccountStatus {
+    AccountStatus_Invalid = 0;
+    AccountStatus_ApprovalRequired = 1;
+    AccountStatus_ApprovalNotRequired = 2;
+    AccountStatus_Approved = 3;
+    AccountStatus_TemporarilyBanned = 4;
+    AccountStatus_PermanentlyBanned = 5;
+}
+
+
+enum AccountVisibility {
+    AccountVisibility_Invalid = 0;
+    AccountVisibility_Private = 1;
+    AccountVisibility_Public = 2;
+    AccountVisibility_FriendsOnly = 3;
+    AccountVisibility_FriendsOfFriends = 4;
+}
+
+
+enum AccountActivityStatus {
+    AccountActivityStatus_Invalid = 0;
+    AccountActivityStatus_Online = 1;
+    AccountActivityStatus_Offline = 2;
+    AccountActivityStatus_Hidden = 3;
+}

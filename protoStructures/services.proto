@@ -1,0 +1,74 @@
+syntax = "proto3";
+option go_package = "TermChat";
+
+// TODO: Rename it later
+service UserInteraction 
+{
+    rpc getFriends(GetFriendsRequest) returns(GetFriendsResponse) {}
+    rpc addFriend(AddFriendRequest) returns(AddFriendResponse) {}
+    rpc removeFriend(RemoveFriendRequest) returns(RemoveFriendResponse) {}
+    rpc listUsers(ListUsersRequest) returns(ListUsersResponse) {}
+}
+
+// TODO: Move messages into different files
+// ----------------------------------------------------------------------------
+message PersonalInfo
+{
+    string firstName = 1;
+    string lastName = 2;
+    uint32 age = 3;
+    string email = 4;
+}
+
+message User
+{
+    uint32 uniqueId = 1;
+    string loginId = 2;
+    PersonalInfo personalInfo = 3;
+}
+
+// ----------------------------------------------------------------------------
+message GetFriendsRequest
+{
+    string tokenId = 1;
+}
+
+message GetFriendsResponse
+{
+    repeated User friends = 1;
+}
+
+// ----------------------------------------------------------------------------
+message AddFriendRequest
+{
+    string tokenId = 1;
+}
+
+message AddFriendResponse
+{
+    string message = 1;
+}
+
+
+// ----------------------------------------------------------------------------
+message RemoveFriendRequest
+{
+    string tokenId = 1;
+}
+
+message RemoveFriendResponse
+{
+    string message = 1;
+}
+
+
+// ----------------------------------------------------------------------------
+message ListUsersRequest
+{
+    string tokenId = 1;
+}
+
+message ListUsersResponse
+{
+    repeated User users = 1;
+}
